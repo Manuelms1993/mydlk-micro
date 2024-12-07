@@ -1,0 +1,7 @@
+cd /home/manuel-montero/MM_DLK/mydlk-micro/ && uvicorn micro:app --reload --port 8054
+
+
+
+# ver puerto abierto
+sudo lsof -i :8054
+kill -9 id
