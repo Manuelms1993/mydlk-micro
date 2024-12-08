@@ -1,0 +1,208 @@
+openapi: 3.0.0
+info:
+  title: "MyDLK Micro API"
+  description: "API for managing IMDb films stored in a Hive table."
+  version: "1.0.0"
+servers:
+  - url: "http://127.0.0.1:8054"
+paths:
+  /get-imdb-film/:
+    get:
+      summary: "Retrieve a film by ID"
+      parameters:
+        - name: "id"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+          description: "Unique identifier of the desired film"
+      responses:
+        200:
+          description: "Film data retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                  title:
+                    type: "string"
+                  release_year:
+                    type: "integer"
+                  imdb_score:
+                    type: "float"
+                  imdb_votes:
+                    type: "integer"
+        404:
+          description: "Film not found"
+
+  /get-imdb-film-by-name/:
+    get:
+      summary: "Retrieve a film by its name"
+      parameters:
+        - name: "name"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+          description: "Name of the film"
+      responses:
+        200:
+          description: "Film data retrieved successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                  title:
+                    type: "string"
+                  release_year:
+                    type: "integer"
+                  imdb_score:
+                    type: "float"
+                  imdb_votes:
+                    type: "integer"
+        404:
+          description: "Film not found"
+
+  /create-film/:
+    post:
+      summary: "Create a new film entry"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                id:
+                  type: "string"
+                title:
+                  type: "string"
+                type:
+                  type: "string"
+                release_year:
+                  type: "integer"
+                age_certification:
+                  type: "string"
+                  nullable: true
+                runtime:
+                  type: "integer"
+                genres:
+                  type: "string"
+                production_countries:
+                  type: "string"
+                seasons:
+                  type: "integer"
+                  nullable: true
+                imdb_score:
+                  type: "float"
+                imdb_votes:
+                  type: "integer"
+                tmdb_popularity:
+                  type: "string"
+                tmdb_score:
+                  type: "float"
+      responses:
+        201:
+          description: "Film created successfully"
+        400:
+          description: "Bad request"
+
+  /insert-if-not-exist-film/:
+    put:
+      summary: "Insert a film entry if it does not exist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                id:
+                  type: "string"
+                title:
+                  type: "string"
+                type:
+                  type: "string"
+                release_year:
+                  type: "integer"
+                age_certification:
+                  type: "string"
+                  nullable: true
+                runtime:
+                  type: "integer"
+                genres:
+                  type: "string"
+                production_countries:
+                  type: "string"
+                seasons:
+                  type: "integer"
+                  nullable: true
+                imdb_score:
+                  type: "float"
+                imdb_votes:
+                  type: "integer"
+                tmdb_popularity:
+                  type: "string"
+                tmdb_score:
+                  type: "float"
+      responses:
+        201:
+          description: "Film inserted successfully"
+        409:
+          description: "Film already exists"
+
+  /update-film/{film_id}:
+    patch:
+      summary: "Partially update a film's details"
+      parameters:
+        - name: "film_id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "Unique identifier of the film to update"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                imdb_score:
+                  type: "float"
+                release_year:
+                  type: "integer"
+                genres:
+                  type: "string"
+                runtime:
+                  type: "integer"
+                tmdb_score:
+                  type: "float"
+      responses:
+        200:
+          description: "Film updated successfully"
+        404:
+          description: "Film not found"
+
+  /delete-film/{film_id}:
+    delete:
+      summary: "Delete a film by ID"
+      parameters:
+        - name: "film_id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "Unique identifier of the film to delete"
+      responses:
+        204:
+          description: "Film deleted successfully"
+        404:
+          description: "Film not found"
