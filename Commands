@@ -1,4 +1,4 @@
-cd /home/manuel-montero/MM_DLK/mydlk-micro/ && uvicorn micro:app --reload --port 8054
+alias_python_env && cd /home/manuel-montero/MM_DLK/mydlk-micro/ && uvicorn micro:app --reload --port 8054
 
 
 
